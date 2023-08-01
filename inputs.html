@@ -33,6 +33,7 @@
             --blue-neutral: #f2f6f9;
             --bs-modal: rgb(99 99 99 / 36%) 1px 3px 13px 0px;
             --gray: #818181;
+            --red-error: #B1023F;
 
         }
 
@@ -331,7 +332,7 @@
             cursor: pointer;
             line-height: 20px;
             display: inline-block;
-            
+
         }
 
         [type="radio"]:checked+label:before,
@@ -374,6 +375,22 @@
         }
 
         /*Fin radio button*/
+
+        /*error input*/
+        .input--design.has-error {
+            box-shadow: rgb(255 0 0 / 30%) 0px 2px 6px 0px;
+            border: 1px solid var(--red-error);
+        }
+
+        input.form-control.input--design.has-error:focus {
+            box-shadow: rgb(255 0 0 / 30%) 0px 2px 6px 0px !important;
+        }
+
+        input.form-control.input--design.has-error+label {
+            color: var(--red-error);
+        }
+
+        /*Fin error input*/
     </style>
 </body>
 <div class="container">
@@ -425,6 +442,12 @@
             <input type="text" id="txtFechaN"
                 class="form-control input--design input--design-placeholder input--icon-properties hasDatepicker"
                 data-mask="99/99/9999" placeholder="DD/MM/AAAA" autocomplete="off">
+        </div>
+        <div class="col-sm-6 mt-4">
+            <div class="floating-label-input">
+                <input type="text" class="form-control input--design has-error" placeholder="No dejar vacio">
+                <label class="floating-label active">Error input</label>
+            </div>
         </div>
     </div>
     <div class="row mt-5">
