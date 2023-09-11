@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/94fcff9d79.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <style>
+        :root {
+            --blue: #042D6f;
+            --green: #2FC5A9;
+            --white: #ffff;
+            --blue-neutral: #f2f6f9;
+            --bs-modal: rgb(99 99 99 / 36%) 1px 3px 13px 0px;
+            --gray: #818181;
+            --red-error: #B1023F;
+            --box-shadow: #63636333 0px 2px 6px 0px;
+
+        }
+
+        .input--design::placeholder {
+            color: transparent;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .input--design-placeholder::placeholder {
+            color: var(--blue) !important;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .input--design-placeholder::-webkit-input-placeholder {
+            color: var(--blue) !important;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .input--design-placeholder:-ms-input-placeholder {
+            color: var(--blue) !important;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .form-control.input--design {
+            border: 0;
+            box-shadow: var(--box-shadow);
+            height: 40px;
+            font-size: 14px;
+            color: var(--blue);
+            margin-top: .5rem;
+        }
+
+        .container_input-drop {
+            display: flex;
+            align-items: center;
+            box-shadow: var(--box-shadow);
+            width: 350px;
+        }
+
+        .select--design--drop {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            width: 100%;
+            height: 40px;
+            margin-top: 7px;
+        }
+
+        .select--design--drop::before {
+            content: "";
+            width: 1px;
+            height: calc(100% - 1px);
+            position: absolute;
+            background: var(--blue-neutral);
+            right: 0;
+            z-index: 4;
+        }
+
+        .option {
+            padding: 0 10px 0 15px;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            background: var(--white);
+            position: absolute;
+            top: 0;
+            width: 100%;
+            pointer-events: none;
+            order: 2;
+            z-index: 1;
+            box-sizing: border-box;
+            overflow: hidden;
+            white-space: nowrap;
+            margin-bottom: 0;
+
+        }
+
+        .option:hover {
+            background: #dad6d6;
+        }
+
+        .select--design--drop:focus .option {
+            position: relative;
+            pointer-events: all;
+            margin-bottom: 0;
+            box-shadow: var(--box-shadow);
+
+        }
+
+        .selectopt {
+            opacity: 0;
+            position: absolute;
+            left: -99999px;
+        }
+
+        .selectopt:checked+.option {
+            order: 1;
+            z-index: 2;
+            background: var(--white);
+            border-top: none;
+            position: relative;
+            /* width: calc(100% - 93px); */
+
+        }
+
+        .selectopt:checked+.option:after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid var(--blue);
+            position: absolute;
+            right: 10px;
+            top: calc(50% - 2.5px);
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .selectopt:checked+.option:before {
+            position: absolute;
+            right: 0;
+            height: 40px;
+            width: 40px;
+            content: '';
+            background: var(--white);
+        }
+
+        /* .selectopt:checked+.option .pais--name {
+            display: none;
+        } */
+
+        .img--drop {
+            width: 25px;
+        }
+
+        .form-control.input--design.no-bs {
+            box-shadow: none;
+        }
+
+        .pais--name {
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-sm-6 col-md-8">
+                <div class="container_input-drop">
+                    <div class="select--design--drop" tabindex="1" id="SelectPaises">
+
+                    </div>
+                    <input type="text" class="form-control input--design no-bs" id="telefono" maxlength="18">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Cuando el documento esté listo
+        $(document).ready(function () {
+            // Obtener el elemento con el id 'SelectPaises'
+            var SelectPaises = $('#SelectPaises');
+
+            // Cargar datos de los países y generar opciones dinámicamente
+            $.ajax({
+                url: 'content/paises.json', // URL del archivo JSON con los datos de los países
+                dataType: 'json', // Tipo de datos que esperamos recibir
+                success: function (paises) { // Función a ejecutar en caso de éxito al cargar el archivo JSON
+
+                    // var filteredpaises = paises.filter(function(pais) {
+                    //     return pais.pais === "Estados Unidos" || pais.pais === "México" || pais.pais === "Canadá"; //filtrar por paises
+                    // });
+
+                    // Recorrer cada país en la lista de países
+                    paises.forEach(function (pais, index) {
+                        // Crear una opción de radio con etiqueta usando plantillas de cadena
+                        var _innerHtml = `
+                        <input class="selectopt" name="test" type="radio" id="opt${index + 1}" ${index === 1 ? 'checked' : ''}>
+                        <label for="opt${index + 1}" class="option default-option">
+                            <img class="img--drop" src="content/img/${pais.image}">
+                            <span class="pais--name">${pais.country}</span>
+                        </label>
+                    `;
+                        // Agregar la opción al elemento de selección de países
+                        SelectPaises.append(_innerHtml);
+                    });
+
+                    // Definir la lada inicialmente como la de México (índice 1)
+                    var selectedLada = paises[1].lada;
+
+                    // Obtener los elementos de las opciones y nombres de países
+                    var options = $('.selectopt');
+                    var names = $('.pais--name');
+
+                    // Manejar el evento click en las opciones
+                    options.click(function () {
+                        var index = options.index(this);
+                        selectedLada = paises[index].lada;
+
+                        // Obtener el número actual y eliminar la lada y espacios en blanco
+                        var currentValue = $('#telefono').val();
+                        var phoneNumber = currentValue.replace(/\s*\+\d+\s*/, '').trim();
+
+                        // Actualizar el valor del teléfono con la nueva lada y número
+                        $('#telefono').val(selectedLada + ' ' + phoneNumber);
+
+                        // Actualizar la longitud máxima del campo
+                        $('#telefono').attr('maxlength', selectedLada.length + 14);
+                    });
+
+                    // Restablecer la lada y el valor del teléfono al cargar la página
+                    var currentValue = $('#telefono').val();
+                    var phoneNumber = currentValue.replace(/\s*\+\d+\s*/, '').trim();
+                    $('#telefono').val(selectedLada + ' ' + phoneNumber);
+
+                    // Manejar el evento de presionar tecla en el campo de teléfono
+                    $('#telefono').on('keydown', function (e) {
+                        var cursorPosition = this.selectionStart;
+                        var inputValue = $(this).val();
+
+                        // Prevenir la eliminación de la lada si la posición del cursor está antes de ella
+                        if ((e.key === 'Backspace' || e.key === 'Delete') && cursorPosition <= selectedLada.length + 1) {
+                            e.preventDefault();
+                        }
+                    });
+
+                    // Manejar el evento de entrada de datos en el campo de teléfono
+                    $('#telefono').on('input', function () {
+                        var inputValue = $(this).val();
+                        var formattedValue = inputValue.replace(/[^0-9+]/g, '');
+
+                        // Formatear el número con la lada y espacios
+                        if (formattedValue.startsWith(selectedLada)) {
+                            formattedValue = selectedLada + ' ' + formattedValue.substr(selectedLada.length).replace(/(\d{2})(?=\d)/g, '$1 ');
+                        }
+
+                        // Establecer el valor formateado en el campo
+                        $(this).val(formattedValue);
+
+                        // Establecer la longitud máxima del campo
+                        var maxLength = (selectedLada + ' ').length + 14;
+                        $(this).attr('maxlength', maxLength);
+                    });
+
+                    // Establecer la longitud máxima del campo al cargar la página
+                    $('#telefono').attr('maxlength', selectedLada.length + 14);
+                },
+                error: function (error) { // Función en caso de error al cargar el archivo JSON
+                    console.log('Error al obtener los datos:', error);
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

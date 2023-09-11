@@ -1,0 +1,7 @@
+[
+    { "country": "E.U", "lada": "+1", "image": "EU.png" },
+    { "country": "México", "lada": "+52", "image": "mexico.png" },
+    { "country": "Canadá", "lada": "+1", "image": "canada.png" },
+    { "country": "Francia", "lada": "+33", "image": "france.png" },
+    { "country": "Ecuador", "lada": "+593", "image": "ecuador.svg" }
+]

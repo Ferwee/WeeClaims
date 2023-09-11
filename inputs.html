@@ -391,6 +391,19 @@
         }
 
         /*Fin error input*/
+
+        /*input + drop*/
+        .container_input-drop {
+            box-shadow: rgb(0 0 0 / 8%) 0px 2px 3px 1px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            flex-wrap: nowrap;
+        }
+
+
+
+
     </style>
 </body>
 <div class="container">
@@ -450,7 +463,7 @@
             </div>
         </div>
     </div>
-    <div class="row mt-5">
+    <!-- <div class="row mt-5">
         <div class="col-sm-6 col-md-8">
             <div class="input-group">
                 <span class="input-group-addon dropdown-toggle CursorPointer" data-toggle="dropdown">
@@ -484,6 +497,36 @@
                     <label for="r2">Opcion2</label>
                 </div>
             </form>
+        </div>
+    </div> -->
+    <div class="row mt-5">
+        <div class="col-sm-6 col-md-8">
+            <div class="container_input-drop">
+                <div class="select" tabindex="1">
+                    <input class="selectopt" name="test" type="radio" id="opt1" checked>
+                    <label for="opt1" class="option">Oranges</label>
+                    <input class="selectopt" name="test" type="radio" id="opt2">
+                    <label for="opt2" class="option">Apples</label>
+                    <input class="selectopt" name="test" type="radio" id="opt3">
+                    <label for="opt3" class="option">Grapefruit</label>
+                    <input class="selectopt" name="test" type="radio" id="opt4">
+                    <label for="opt4" class="option">Bananas</label>
+                    <input class="selectopt" name="test" type="radio" id="opt5">
+                    <label for="opt5" class="option">Watermelon</label>
+                  </div>
+                <!-- <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                        aria-expanded="false">
+                        Dropdown button
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </div> -->
+                <input type="text" class="form-control input--design">
+            </div>
         </div>
     </div>
 </div>
